@@ -8,6 +8,8 @@ export default function App() {
   const [bottle,setBottle] = useState(0);
   const [hour,setHour] = useState(0);
   const [gender, setGender] = useState('male');
+  const [result, setResult] = useState(0);
+  const [message, setMessage] = useState('');
   //for ios DropDownPicker:
   const [openBT, setOpenforBottles] = useState(false);
   const [openHR, setOpenforHours] = useState(false);
@@ -21,8 +23,27 @@ export default function App() {
   {label: 'Female',value: 'female'},
  ]
 
+  function bottToLit(){return bottle * 0.33}
+  function grams(){return bottToLit() * 8 * 4.5}
+  function burning(){return weight / 10}
+  function gramsLeft(){return grams() - (burning() * hour)}
+  function forMale() {return (gramsLeft() / (weight * 0.7)).toFixed(2)}
+  function forFemale() {return (gramsLeft() / (weight * 0.6)).toFixed(2)}
+
+  function checklist(){
+    let message = "Set";
+    if(weight == 0) message += " weight,";
+    if(bottle == 0) message += " bottles,";
+    if(hour == 0) message += " hours";
+    if(message == "Set"){return true}
+    else{setMessage(message)}
+  }
+
   function calculate(){
-    return null;
+    if(checklist()){
+      if(gender == 'male'){setResult(forMale())}
+      else{setResult(forFemale())}
+    }
   }
 
   return (
@@ -49,7 +70,6 @@ export default function App() {
         setValue={setBottle}
         autoScroll={true}
       />
-      {console.log("selected bottles: " + bottle)}
       <Text>Time</Text>
       <DropDownPicker 
         open={openHR}
@@ -59,7 +79,6 @@ export default function App() {
         setValue={setHour}
         autoScroll={true}
       />
-      {console.log("selected hours: " + hour)}
       <Text>Gender</Text>
       <RadioForm
       initial={0}
@@ -68,6 +87,7 @@ export default function App() {
       style={styles.label}
       >
       </RadioForm>
+      <Text>{(result > 0 && message == "" )?result:message}</Text>
       <Button onPress={calculate} style={styles.label} title="Calculate"></Button>
     </View>
   );
