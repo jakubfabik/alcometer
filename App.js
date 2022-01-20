@@ -1,5 +1,5 @@
 import { StyleSheet, Text, TextInput, View, Button } from 'react-native';
-import react, {useState} from 'react';
+import react, {useState, useEffect} from 'react';
 import DropDownPicker from 'react-native-dropdown-picker';
 import RadioForm from 'react-native-simple-radio-button';
 
@@ -9,7 +9,7 @@ export default function App() {
   const [hour,setHour] = useState(0);
   const [gender, setGender] = useState('male');
   const [result, setResult] = useState(0);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState("Set");
   //for ios DropDownPicker:
   const [openBT, setOpenforBottles] = useState(false);
   const [openHR, setOpenforHours] = useState(false);
@@ -30,19 +30,20 @@ export default function App() {
   function forMale() {return (gramsLeft() / (weight * 0.7)).toFixed(2)}
   function forFemale() {return (gramsLeft() / (weight * 0.6)).toFixed(2)}
 
-  function checklist(){
-    let message = "Set";
-    if(weight == 0) message += " weight,";
-    if(bottle == 0) message += " bottles,";
-    if(hour == 0) message += " hours";
-    if(message == "Set"){return true}
-    else{setMessage(message)}
-  }
+
+
 
   function calculate(){
-    if(checklist()){
-      if(gender == 'male'){setResult(forMale())}
-      else{setResult(forFemale())}
+    //control part
+      let mes = "Set";
+      if(weight == 0) {mes +=" weight,"};
+      if(bottle == 0) {mes +=" bottles,"};
+      if(hour == 0) {mes +=" time,"};
+      setMessage(mes);
+    //control part
+      if(mes == "Set"){ //only if all is set make the calculation
+        if(gender == 'male'){setResult(forMale())}
+        else{setResult(forFemale())}
     }
   }
 
@@ -87,7 +88,7 @@ export default function App() {
       style={styles.label}
       >
       </RadioForm>
-      <Text>{(result > 0 && message == "" )?result:message}</Text>
+      <Text>{message == "Set"?(result>0?result:"No alcohol."):message}</Text>
       <Button onPress={calculate} style={styles.label} title="Calculate"></Button>
     </View>
   );
