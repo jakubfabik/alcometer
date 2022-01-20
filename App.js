@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TextInput, View, Button } from 'react-native';
+import { StyleSheet, Text, TextInput, View, Button, Alert } from 'react-native';
 import react, {useState, useEffect} from 'react';
 import DropDownPicker from 'react-native-dropdown-picker';
 import RadioForm from 'react-native-simple-radio-button';
@@ -31,12 +31,22 @@ export default function App() {
   function forFemale() {return (gramsLeft() / (weight * 0.6)).toFixed(2)}
 
 
-
+  const weightAlert = () =>
+    Alert.alert(
+      "Weight parameter can not be empty.",
+      " ",
+      [
+        { text: "OK",}
+      ]
+    );
 
   function calculate(){
     //control part
       let mes = "Set";
-      if(weight == 0) {mes +=" weight,"};
+      if(weight == 0) {
+        mes +=" weight,";
+        weightAlert();
+      };
       if(bottle == 0) {mes +=" bottles,"};
       if(hour == 0) {mes +=" time,"};
       setMessage(mes);
