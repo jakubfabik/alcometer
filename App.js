@@ -1,7 +1,10 @@
-import { StyleSheet, Text, TextInput, View, Button, Alert } from 'react-native';
+import { Text, TextInput, View, Alert } from 'react-native';
+import { Button } from 'react-native-elements';
 import react, {useState, useEffect} from 'react';
 import DropDownPicker from 'react-native-dropdown-picker';
 import RadioForm from 'react-native-simple-radio-button';
+import styles from './Styles';
+import { setStatusBarNetworkActivityIndicatorVisible, setStatusBarStyle } from 'expo-status-bar';
 
 export default function App() {
   const [weight,setWeight] = useState(0);
@@ -59,20 +62,22 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      <Text>Alcometer</Text>
-      <Text>Weight</Text>
+      <Text style={styles.heder}>Alcometer</Text>
+      <Text style={styles.label}>Weight</Text>
       <TextInput
+       returnKeyType='done'
         keyboardType='number-pad'
         placeholder='Enter your weight'
         onChangeText={text => setWeight(text)}
       />
-      <Text>Bottles</Text>
+      <Text style={styles.label}>Bottles</Text>
       {/* <DropDownPicker style={styles.label} selectedValue={bottle} onValueChange={(itemValue) => setBottle(itemValue)}>
         {counter_list.map((counter_list) => ( 
         <DropDownPicker.Item label={counter_list.label + (counter_list.value == 1 ? ' bottle':' counter_list')} value={counter_list.value} />
       ))}
       </DropDownPicker> */}
-      <DropDownPicker 
+      <DropDownPicker
+        zIndex={2000}
         open={openBT}
         //value={counter_list.label + (counter_list.value == 1 ? ' bottle':' counter_list')} value={counter_list.value}
         items={counter_list}
@@ -81,8 +86,11 @@ export default function App() {
         setValue={setBottle}
         autoScroll={true}
       />
-      <Text>Time</Text>
-      <DropDownPicker 
+      <Text style={styles.label}>Time</Text>
+      <DropDownPicker
+        zIndex={1000}
+        id="second"
+        style={styles.bottomScroll}
         open={openHR}
         items={counter_list}
         placeholder={hour?("Selected "  + hour.toString() + (hour == 1 ? ' hour ':' houres ')):("No selected hours")}
@@ -90,7 +98,7 @@ export default function App() {
         setValue={setHour}
         autoScroll={true}
       />
-      <Text>Gender</Text>
+      <Text style={styles.label}>Gender</Text>
       <RadioForm
       initial={0}
       onPress={(value) => {setGender(value)}}
@@ -98,18 +106,9 @@ export default function App() {
       style={styles.label}
       >
       </RadioForm>
-      <Text>{message == "Set"?(result>0?result:"No alcohol."):message}</Text>
-      <Button onPress={calculate} style={styles.label} title="Calculate"></Button>
+      <Text style={styles.calculation}>{message == "Set"?(result>0?result:"No alcohol."):message}</Text>
+      <Button onPress={calculate} buttonStyle={styles.button} title="Calculate"></Button>
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    marginTop:50,
-    marginLeft:10,
-  },
-  label: {
-    marginBottom: 10,
-  },
-});
