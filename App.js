@@ -1,10 +1,10 @@
 import { Text, TextInput, View, Alert } from 'react-native';
 import { Button } from 'react-native-elements';
-import react, {useState, useEffect} from 'react';
+import react, {useState} from 'react';
 import DropDownPicker from 'react-native-dropdown-picker';
 import RadioForm from 'react-native-simple-radio-button';
 import styles from './Styles';
-import { setStatusBarNetworkActivityIndicatorVisible, setStatusBarStyle } from 'expo-status-bar';
+
 
 export default function App() {
   const [weight,setWeight] = useState(0);
@@ -23,7 +23,7 @@ export default function App() {
   }
 
   const genders = [{label: 'Male',value: 'male'},
-  {label: 'Female',value: 'female'},
+                   {label: 'Female',value: 'female'},
  ]
 
   function bottToLit(){return bottle * 0.33}
@@ -53,8 +53,8 @@ export default function App() {
       if(bottle == 0) {mes +=" bottles"};
       if(hour == 0) {mes +=" time"};
       setMessage(mes);
-    //control part
-      if(mes == "Set"){ //only if all is set make the calculation
+    //end of control part
+      if(mes == "Set"){ //only if all has been set make the calculation
         if(gender == 'male'){setResult(forMale())}
         else{setResult(forFemale())}
     }
@@ -84,15 +84,9 @@ export default function App() {
         onChangeText={text => setWeight(text)}
       />
       <Text style={styles.label}>Bottles</Text>
-      {/* <DropDownPicker style={styles.label} selectedValue={bottle} onValueChange={(itemValue) => setBottle(itemValue)}>
-        {counter_list.map((counter_list) => ( 
-        <DropDownPicker.Item label={counter_list.label + (counter_list.value == 1 ? ' bottle':' counter_list')} value={counter_list.value} />
-      ))}
-      </DropDownPicker> */}
       <DropDownPicker
         zIndex={2000}
         open={openBT}
-        //value={counter_list.label + (counter_list.value == 1 ? ' bottle':' counter_list')} value={counter_list.value}
         items={counter_list}
         placeholder={bottle?("Selected "  + bottle.toString() + (bottle == 1 ? ' bottle ':' bottles ')):("No bottle selected")}
         setOpen={setOpenforBottles}
