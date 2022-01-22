@@ -47,16 +47,29 @@ export default function App() {
     //control part
       let mes = "Set";
       if(weight == 0) {
-        mes +=" weight,";
+        mes +=" weight";
         weightAlert();
       };
-      if(bottle == 0) {mes +=" bottles,"};
-      if(hour == 0) {mes +=" time,"};
+      if(bottle == 0) {mes +=" bottles"};
+      if(hour == 0) {mes +=" time"};
       setMessage(mes);
     //control part
       if(mes == "Set"){ //only if all is set make the calculation
         if(gender == 'male'){setResult(forMale())}
         else{setResult(forFemale())}
+    }
+  }
+
+  function resultcolor(){
+    if(result>= 0.5 && result <1){
+      return{
+        color: '#fce703'
+      }
+    }
+    if(result>=1){
+      return{
+        color: 'red'
+      }
     }
   }
 
@@ -106,7 +119,7 @@ export default function App() {
       style={styles.label}
       >
       </RadioForm>
-      <Text style={styles.calculation}>{message == "Set"?(result>0?result:"No alcohol."):message}</Text>
+      <Text style={[styles.calculation,resultcolor()]}>{message == "Set"?(result>0?result:"No alcohol"):message}</Text>
       <Button onPress={calculate} buttonStyle={styles.button} title="Calculate"></Button>
     </View>
   );
