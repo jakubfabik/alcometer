@@ -4,6 +4,7 @@ import react, {useState} from 'react';
 import DropDownPicker from 'react-native-dropdown-picker';
 import RadioForm from 'react-native-simple-radio-button';
 import styles from './Styles';
+import Radiobutton from './components/Radiobutton';
 
 
 export default function App() {
@@ -106,13 +107,14 @@ export default function App() {
         autoScroll={true}
       />
       <Text style={styles.label}>Gender</Text>
-      <RadioForm
+{/*       <RadioForm
       initial={0}
       onPress={(value) => {setGender(value)}}
       radio_props={genders}
       style={styles.label}
       >
-      </RadioForm>
+      </RadioForm> */}
+      <Radiobutton style={styles.label} options={genders} onPress={(value) => {setGender(value)}} />
       <Text style={[styles.calculation,resultcolor()]}>{message == "Set"?(result>0?result:"No alcohol"):message}</Text>
       <Button onPress={calculate} buttonStyle={styles.button} title="Calculate"></Button>
     </View>
