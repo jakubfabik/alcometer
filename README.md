@@ -1,6 +1,7 @@
-# lactometer
+# alctometer
 
 first assignment, alcohol meter counter in the react native
+Tested on Iphone 5se IOS 15.2
 
 ## Getting started
 
