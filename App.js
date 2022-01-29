@@ -2,7 +2,6 @@ import { Text, TextInput, View, Alert } from 'react-native';
 import { Button } from 'react-native-elements';
 import react, {useState} from 'react';
 import DropDownPicker from 'react-native-dropdown-picker';
-import RadioForm from 'react-native-simple-radio-button';
 import styles from './Styles';
 import Radiobutton from './components/Radiobutton';
 
@@ -17,6 +16,8 @@ export default function App() {
   //for ios DropDownPicker:
   const [openBT, setOpenforBottles] = useState(false);
   const [openHR, setOpenforHours] = useState(false);
+
+  
 
   const counter_list = Array();
   for(let i=0;i<20;i++){
@@ -43,6 +44,8 @@ export default function App() {
         { text: "OK",}
       ]
     );
+
+  console.log('ahoj');
 
   function calculate(){
     //control part

@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Pressable } from 'react-native';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 /** 
  *    @param options
  *    @param onPress
@@ -13,6 +13,14 @@ export default function Radiobutton({options, onPress}) {
         setValue(selected);
         onPress(selected);
     }
+
+    function setDefault(){
+        handlePress('male');
+    }
+
+    useEffect(()=> {
+        setDefault();
+    },[])
 
     return (
     <>
@@ -63,4 +71,4 @@ const styles = StyleSheet.create({
 		fontWeight: "bold",
         
     },
-});
+})
