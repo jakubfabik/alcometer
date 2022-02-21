@@ -1,9 +1,11 @@
-import { Text, TextInput, View, Alert } from 'react-native';
+import { Text, TextInput, View, Alert, Animated} from 'react-native';
 import { Button } from 'react-native-elements';
-import react, {useState} from 'react';
+import {useState, useEffect} from 'react';
 import DropDownPicker from 'react-native-dropdown-picker';
 import styles from './Styles';
 import Radiobutton from './components/Radiobutton';
+import { AnimatedBackgroundColorView } from 'react-native-animated-background-color-view';
+
 
 
 export default function App() {
@@ -16,8 +18,7 @@ export default function App() {
   //for ios DropDownPicker:
   const [openBT, setOpenforBottles] = useState(false);
   const [openHR, setOpenforHours] = useState(false);
-
-  
+  const [color, setColor] = useState('red');
 
   const counter_list = Array();
   for(let i=0;i<20;i++){
@@ -44,8 +45,12 @@ export default function App() {
         { text: "OK",}
       ]
     );
-
-  console.log('ahoj');
+  
+  useEffect(()=>{
+    if(result >= 0.5 && result < 1){setColor('#fff3d1')}
+    if(result < 0.5){setColor('#e4fad4')}
+    if(result > 1){setColor('#ffd9d9')}
+  },[result])
 
   function calculate(){
     //control part
@@ -78,7 +83,12 @@ export default function App() {
   }
 
   return (
-    <View style={styles.container}>
+    
+      <AnimatedBackgroundColorView
+      color={color}
+      initialColor='white'
+      duration={10000}
+      ><View style={styles.container}>
       <Text style={styles.heder}>Alcometer</Text>
       <Text style={styles.label}>Weight</Text>
       <TextInput
@@ -120,7 +130,9 @@ export default function App() {
       <Radiobutton style={styles.label} options={genders} onPress={(value) => {setGender(value)}} />
       <Text style={[styles.calculation,resultcolor()]}>{message == "Set"?(result>0?result:"No alcohol"):message}</Text>
       <Button onPress={calculate} buttonStyle={styles.button} title="Calculate"></Button>
-    </View>
+      </View>
+      </AnimatedBackgroundColorView>
+    
   );
 }
 
